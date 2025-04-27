@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { 
@@ -21,18 +20,17 @@ import { ChartData } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { 
   ChartPie, 
-  ChartBar, 
-  ChartLine, 
-  ChartArea,
-  ChartScatter,
-  ChartBarHorizontal
+  BarChart, 
+  LineChart, 
+  AreaChart,
+  ScatterChart,
+  BarChartHorizontal
 } from 'lucide-react';
 
 interface VisualizationCardProps {
   chart: ChartData;
 }
 
-// Array of colors for charts
 const COLORS = ['#1EAEDB', '#8B5CF6', '#0FA0CE', '#D946EF', '#F97316', '#0EA5E9', '#EC4899', '#10B981'];
 
 const VisualizationCard: React.FC<VisualizationCardProps> = ({ chart }) => {
@@ -40,18 +38,18 @@ const VisualizationCard: React.FC<VisualizationCardProps> = ({ chart }) => {
     switch (chart.type) {
       case 'bar':
       case 'column':
-        return <ChartBar className="h-4 w-4" />;
+        return <BarChart className="h-4 w-4" />;
       case 'line':
-        return <ChartLine className="h-4 w-4" />;
+        return <LineChart className="h-4 w-4" />;
       case 'pie':
       case 'donut':
         return <ChartPie className="h-4 w-4" />;
       case 'area':
-        return <ChartArea className="h-4 w-4" />;
+        return <AreaChart className="h-4 w-4" />;
       case 'scatter':
-        return <ChartScatter className="h-4 w-4" />;
+        return <ScatterChart className="h-4 w-4" />;
       default:
-        return <ChartBar className="h-4 w-4" />;
+        return <BarChart className="h-4 w-4" />;
     }
   };
 

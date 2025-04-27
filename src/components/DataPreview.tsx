@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -6,8 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { ParsedData, DataSummary } from '@/types';
-import { Bar, Pie } from 'lucide-react';
-import { ChevronRight, ChevronLeft } from 'lucide-react';
+import { BarChartHorizontal, PieChart, ChevronRight, ChevronLeft } from 'lucide-react';
 
 interface DataPreviewProps {
   data: ParsedData;
@@ -88,11 +86,11 @@ const DataPreview: React.FC<DataPreviewProps> = ({ data, summary }) => {
         <Tabs defaultValue="data">
           <TabsList className="mb-4">
             <TabsTrigger value="data" className="flex items-center gap-1">
-              <Bar className="h-4 w-4" />
+              <BarChartHorizontal className="h-4 w-4" />
               <span>Data</span>
             </TabsTrigger>
             <TabsTrigger value="summary" className="flex items-center gap-1">
-              <Pie className="h-4 w-4" />
+              <PieChart className="h-4 w-4" />
               <span>Summary</span>
             </TabsTrigger>
           </TabsList>
