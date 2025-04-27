@@ -6,7 +6,15 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 const MapVisualization: React.FC = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
-  const [mapboxToken, setMapboxToken] = useState('');
+  const [mapboxToken, setMapboxToken] = useState<string>('');
+
+  useEffect(() => {
+    // Try to load token from localStorage on component mount
+    const savedToken = localStorage.getItem('mapbox-token');
+    if (savedToken) {
+      setMapboxToken(savedToken);
+    }
+  }, []);
 
   useEffect(() => {
     if (!mapContainer.current || map.current) return;
