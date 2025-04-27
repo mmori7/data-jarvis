@@ -42,3 +42,15 @@ export type DataSummary = {
     completeness?: number;
   }>;
 };
+
+export type DataPoint = {
+  name: string;
+  value: number;
+};
+
+export type MapDataPoint = {
+  country: string;
+  latitude: number;
+  longitude: number;
+  value: number;
+};

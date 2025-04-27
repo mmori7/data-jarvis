@@ -5,11 +5,22 @@ import { ChartData } from '@/types';
 
 interface VisualizationsProps {
   charts: ChartData[];
+  horizontal?: boolean;
 }
 
-const Visualizations: React.FC<VisualizationsProps> = ({ charts }) => {
+const Visualizations: React.FC<VisualizationsProps> = ({ charts, horizontal = false }) => {
   if (!charts || charts.length === 0) {
     return null;
+  }
+
+  if (horizontal) {
+    return (
+      <div className="space-y-4">
+        {charts.map(chart => (
+          <VisualizationCard key={chart.id} chart={chart} noCard={true} />
+        ))}
+      </div>
+    );
   }
 
   return (

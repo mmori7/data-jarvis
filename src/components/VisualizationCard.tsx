@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { 
@@ -29,11 +30,12 @@ import {
 
 interface VisualizationCardProps {
   chart: ChartData;
+  noCard?: boolean;
 }
 
 const COLORS = ['#1EAEDB', '#8B5CF6', '#0FA0CE', '#D946EF', '#F97316', '#0EA5E9', '#EC4899', '#10B981'];
 
-const VisualizationCard: React.FC<VisualizationCardProps> = ({ chart }) => {
+const VisualizationCard: React.FC<VisualizationCardProps> = ({ chart, noCard = false }) => {
   const getChartIcon = () => {
     switch (chart.type) {
       case 'bar':
@@ -92,10 +94,13 @@ const VisualizationCard: React.FC<VisualizationCardProps> = ({ chart }) => {
         );
       
       case 'column':
+        // For horizontal bar charts (what we call column)
+        const sortedData = [...chart.data].sort((a, b) => b.value - a.value).slice(0, 20);
+        
         return (
-          <ResponsiveContainer width="100%" height={300}>
-            <ComposedChart layout="vertical" data={chart.data}>
-              <CartesianGrid strokeDasharray="3 3" opacity={0.1} />
+          <ResponsiveContainer width="100%" height={noCard ? 500 : 300}>
+            <ComposedChart layout="vertical" data={sortedData}>
+              <CartesianGrid strokeDasharray="3 3" opacity={0.1} horizontal={false} />
               <XAxis 
                 type="number"
                 tick={{ fill: '#A0AEC0', fontSize: 12 }}
@@ -105,6 +110,7 @@ const VisualizationCard: React.FC<VisualizationCardProps> = ({ chart }) => {
                 type="category"
                 dataKey="name" 
                 tick={{ fill: '#A0AEC0', fontSize: 12 }}
+                width={100}
                 axisLine={{ stroke: '#4A5568' }}
               />
               <Tooltip 
@@ -114,17 +120,29 @@ const VisualizationCard: React.FC<VisualizationCardProps> = ({ chart }) => {
                   color: '#E2E8F0' 
                 }} 
               />
-              <Legend />
               <Bar 
                 dataKey="value" 
                 name={chart.config.yAxis}
                 fill="#1EAEDB" 
                 radius={[0, 4, 4, 0]}
               >
-                {chart.data.map((entry: any, index: number) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                {sortedData.map((entry: any, index: number) => (
+                  <Cell key={`cell-${index}`} fill="#1EAEDB" />
                 ))}
               </Bar>
+              {/* Value labels at end of bars */}
+              {sortedData.map((entry, index) => (
+                <text
+                  key={`label-${index}`}
+                  x={entry.value + 5}
+                  y={index * 30 + 15}
+                  fill="#A0AEC0"
+                  fontSize={12}
+                  textAnchor="start"
+                >
+                  {entry.value.toLocaleString()}
+                </text>
+              ))}
             </ComposedChart>
           </ResponsiveContainer>
         );
@@ -277,6 +295,10 @@ const VisualizationCard: React.FC<VisualizationCardProps> = ({ chart }) => {
         return <div>Chart type not supported</div>;
     }
   };
+
+  if (noCard) {
+    return renderChart();
+  }
 
   return (
     <Card className="jarvis-card overflow-hidden">

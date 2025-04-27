@@ -1,4 +1,3 @@
-
 import { DataRow, ParsedData, DataSummary } from '../types';
 import Papa from 'papaparse';
 
@@ -247,6 +246,19 @@ export const generateChartConfigurations = (data: ParsedData, summary: DataSumma
         config: {
           nameKey: 'name',
           valueKey: 'value'
+        }
+      });
+      
+      // Add a column (horizontal bar) chart
+      charts.push({
+        id: 'column-chart-1',
+        title: `${numericCol} by ${categoryCol}`,
+        description: `Column chart showing ${numericCol} values by ${categoryCol}`,
+        type: 'column',
+        data: chartData,
+        config: {
+          xAxis: categoryCol,
+          yAxis: numericCol
         }
       });
     }
