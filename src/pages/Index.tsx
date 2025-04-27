@@ -5,7 +5,6 @@ import DataUpload from '@/components/DataUpload';
 import DataPreview from '@/components/DataPreview';
 import Visualizations from '@/components/Visualizations';
 import StatCard from '@/components/StatCard';
-import MapVisualization from '@/components/MapVisualization';
 import { ParsedData, DataSummary, ChartData } from '@/types';
 import { generateDataSummary, generateChartConfigurations } from '@/utils/dataUtils';
 import { Button } from '@/components/ui/button';
@@ -110,17 +109,24 @@ const Index = () => {
                       />
                     </div>
                     
-                    {/* Middle Column - Map */}
+                    {/* Middle Column - Bar Chart */}
                     <div className="lg:col-span-1">
                       <div className="bg-background border rounded-lg shadow-sm overflow-hidden h-full">
                         <div className="p-4">
                           <h3 className="font-medium">New Positive Cases</h3>
                           <p className="text-sm text-muted-foreground">Select a Country to see more details</p>
                         </div>
-                        <MapVisualization />
+                        <div className="p-4">
+                          {charts.find(c => c.type === 'column') && (
+                            <Visualizations 
+                              charts={[charts.find(c => c.type === 'column')!]} 
+                              horizontal={true} 
+                            />
+                          )}
+                        </div>
                       </div>
                     </div>
-                    
+
                     {/* Right Column - Bar Chart */}
                     <div>
                       <div className="bg-background border rounded-lg shadow-sm overflow-hidden h-full">
